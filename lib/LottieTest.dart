@@ -1,0 +1,49 @@
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+
+class LottieTest extends StatefulWidget {
+  LottieTest({Key key}) : super(key: key);
+
+  @override
+  _LottieTestState createState() => _LottieTestState();
+}
+
+class _LottieTestState extends State<LottieTest> with TickerProviderStateMixin {
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: ListView(
+          children: [
+            Lottie.network(
+              'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json',
+              controller: _controller,
+              onLoaded: (composition) {
+                // Configure the AnimationController with the duration of the
+                // Lottie file and start the animation.
+                _controller
+                  ..duration = composition.duration
+                  ..forward();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
